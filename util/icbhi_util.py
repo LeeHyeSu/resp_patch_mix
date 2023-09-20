@@ -17,6 +17,11 @@ from scipy.signal import butter, lfilter
 
 from .augmentation import augment_raw_audio
 
+# GPU 메모리 과점유 방지
+torch.cuda.set_per_process_memory_fraction(0.4, device=None)
+# CPU 메모리 과점유 방지
+torch.set_num_threads(16)
+
 __all__ = ['get_annotations', 'save_image', 'get_mean_and_std', 'get_individual_cycles_librosa', 'get_individual_cycles_torchaudio', 'split_pad_sample', 'generate_mel_spectrogram', 'generate_fbank', 'concat_augmentation', 'get_score']
 
 

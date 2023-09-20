@@ -11,6 +11,10 @@ from random import randrange
 from matplotlib import pyplot as plt
 import random
 
+# GPU 메모리 과점유 방지
+torch.cuda.set_per_process_memory_fraction(0.4, device=None)
+# CPU 메모리 과점유 방지
+torch.set_num_threads(16)
 
 # override the timm package to relax the input shape constraint.
 class PatchEmbed(nn.Module):
@@ -162,9 +166,10 @@ class SSASTModel(nn.Module):
                 print('\n Loaded SSAST-Base-Frame-400.pth successfully.')
 
             elif load_pretrained_mdl_path == 'Custom':
-                sd = torch.load(os.path.join(out_dir, 'SSAST-Custom-230831.pth'), map_location=device)
+                custom_model = 'SSAST-Custom-230918.pth'
+                sd = torch.load(os.path.join(out_dir, custom_model), map_location=device)
                 # sd = torch.nn.DataParallel(sd)
-                print('\n Loaded SSAST-Custom-230831.pth successfully.')
+                print('\n Loaded', custom_model, 'successfully.')
                         
             # get the fshape and tshape, input_fdim and input_tdim in the pretraining stage
             try:

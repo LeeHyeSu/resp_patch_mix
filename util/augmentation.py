@@ -8,6 +8,11 @@ from torchvision.transforms import transforms
 from torchaudio import transforms as T
 from .time_warping import sparse_image_warp
 
+# GPU 메모리 과점유 방지
+torch.cuda.set_per_process_memory_fraction(0.4, device=None)
+# CPU 메모리 과점유 방지
+torch.set_num_threads(16)
+
 __all__ = ['augment_raw_audio', 'SpecAugment']
 
 

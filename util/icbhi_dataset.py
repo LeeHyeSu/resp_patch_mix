@@ -17,6 +17,10 @@ from .icbhi_util import get_annotations, save_image, generate_fbank, get_individ
 from .icbhi_util import get_individual_cycles_torchaudio, cut_pad_sample_torchaudio
 from .augmentation import augment_raw_audio
 
+# GPU 메모리 과점유 방지
+torch.cuda.set_per_process_memory_fraction(0.4, device=None)
+# CPU 메모리 과점유 방지
+torch.set_num_threads(16)
 
 class ICBHIDataset(Dataset):
     def __init__(self, train_flag, transform, args, print_flag=True, mean_std=False):
